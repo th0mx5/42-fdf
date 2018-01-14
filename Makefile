@@ -1,2 +1,2 @@
 all:
-	cc -o fdf main.c libft/libft.a -lmlx -framework OpenGL -framework AppKit
+	cc -o fdf main.c functions.c libft/libft.a -lmlx -framework OpenGL -framework AppKit
