@@ -6,11 +6,18 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/15 18:13:05 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/15 18:24:13 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int		ft_keyhooked(int keycode, void *params)
+{
+	if (keycode == 53)
+		exit(0);
+	return (0);
+}
 
 void	ft_readanddraw(t_map map, int *fd)
 {
@@ -71,37 +78,6 @@ void	ft_setpoints(t_map map, t_coord *p, t_coord z, char ***array)
 		p[1] = p[0];
 	if (i - 1 <= 0)
 		p[2] = p[0];
-}
-
-int		ft_map_init(t_map *map, char *file_name)
-{
-	char *s;
-	int tmp;
-	int i;
-	char **array;
-	int fd[2];
-	map->fsize.y = 0;
-	map->fsize.x = 0;
-	if (((fd[0] = open(file_name, O_RDONLY)) < 0))
-		return (-1);
-	while ((*s = get_next_line(fd[0], &s)) > 0)
-	{
-		i = 0;
-		map->fsize.y++;
-		tmp = 0;
-		array = ft_strsplit(s, ' ');
-		while (array[i++])
-			tmp++;
-		if (tmp > map->fsize.x)
-			map->fsize.x = tmp;
-	}
-	map->wsize.x = map->fsize.x * 40;
-	map->wsize.y = map->fsize.y * 40;
-	if (map->wsize.x < 50)
-		map->wsize.x = 50;
-	if (map->wsize.y < 50)
-		map->wsize.y = 50;
-	return (0);
 }
 
 void	ft_drawline(t_map map, t_coord a, t_coord b)

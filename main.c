@@ -6,19 +6,11 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 13:58:04 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/15 18:10:10 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/15 18:24:21 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int		ft_keyhooked(int keycode, void *params)
-{
-	if (keycode == 53)
-		exit(0);
-	printf("key : %d\n", keycode);
-	return (0);
-}
 
 int		main(int ac, char **av)
 {
