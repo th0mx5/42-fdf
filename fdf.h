@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:51:59 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/14 20:23:55 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/15 15:51:31 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ struct t_coord
 	int x;
 	int y;
 };
+
 void	ft_checkfilestats(int fd, int *stats);
 void	ft_drawline(void *mlx, void *win, t_coord a, t_coord b);
-void	ft_draw(void *mlx, void *win, int *fd, t_coord wsize, int *file_stats);
+void	ft_readanddraw(void *mlx, void *win, int *stats, int *fd);
+void	ft_readpoints(void *mlx, void *win, int *stats, char **s);
+void	ft_setpoints(t_coord *p, int *stats, int i, int j, char ***array);
+
 #endif
