@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/15 18:21:53 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/15 19:24:54 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int		ft_map_init(t_map *map, char *file_name)
 {
+	map->fname = ft_strdup(file_name);
+	map->zoom = 1.00;
 	map->fsize.y = 0;
 	map->fsize.x = 0;
 	ft_map_counts(map, file_name);
@@ -48,4 +50,22 @@ int		ft_map_counts(t_map *map, char *file_name)
 			map->fsize.x = tmp;
 	}
 	return (0);
+}
+
+void	ft_win_clear(t_map map)
+{
+	int j;
+	int i;
+
+	i = 0;
+	while (i < map.wsize.y)
+	{
+		j = 0;
+		while (j < map.wsize.x)
+		{
+			mlx_pixel_put(map.mlx, map.win, j, i, 0x000000);
+			j++;
+		}
+		i++;
+	}
 }

@@ -6,34 +6,50 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/15 18:24:13 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/15 19:15:32 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		ft_keyhooked(int keycode, void *params)
+int		ft_keyhooked(int keycode, t_map *map)
 {
 	if (keycode == 53)
 		exit(0);
+	if (keycode == 126)
+		map->zoom = map->zoom + 0.1;
+	if (keycode == 125)
+		map->zoom = map->zoom - 0.1;
+	ft_win_clear(*map);
+	ft_readanddraw(*map);
+	//printf("%f\n", map->zoom);
 	return (0);
 }
 
-void	ft_readanddraw(t_map map, int *fd)
+void	ft_readanddraw(t_map map)
 {
-	char *s[2];
+	char	*s[2];
+	int		fd[2];
+	int		j;
 
+	j = 0;
+	if (((fd[0] = open(map.fname, O_RDONLY)) < 0))
+		exit(1);
+	if (((fd[1] = open(map.fname, O_RDONLY)) < 0))
+		exit(1);
 	*s[1] = get_next_line(fd[1], &s[1]);
 	while ((*s[0] = get_next_line(fd[0], &s[0])) > 0 && \
 			(*s[1] = get_next_line(fd[1], &s[1])) > 0)
-		ft_readpoints(map, s);
+	{
+		ft_readpoints(map, s, j);
+		j++;
+	}
 }
 
-void	ft_readpoints(t_map map, char **s)
+void	ft_readpoints(t_map map, char **s, int j)
 {
 	int			i;
 	char		**array[2];
-	static int	j;
 	t_coord		p[3];
 	t_coord		z;
 
@@ -49,7 +65,6 @@ void	ft_readpoints(t_map map, char **s)
 		ft_drawline(map, p[0], p[2]);
 		i++;
 	}
-	j++;
 }
 
 void	ft_setpoints(t_map map, t_coord *p, t_coord z, char ***array)
@@ -64,15 +79,15 @@ void	ft_setpoints(t_map map, t_coord *p, t_coord z, char ***array)
 	stats[1] = map.fsize.x;
 	stats[2] = map.wsize.x;
 	stats[3] = map.wsize.y;
-	p[0].x = (stats[2] / 2) - stats[0] * 10 + (j + i) * 10;
-	p[0].y = (stats[3] / 2) + (j - i) * 5 - ft_atoi(array[0][i]) * 10;
-	p[2].x = p[0].x + 10;
-	p[2].y = (stats[3] / 2) + (j - i + 1) * 5 - ft_atoi(array[1][i]) * 10;
+	p[0].x = (stats[2] / 2) - stats[0] * 10 + ((j + i) * 10) * map.zoom;
+	p[0].y = (stats[3] / 2) + ((j - i) * 5 - ft_atoi(array[0][i]) * 10) * map.zoom;
+	p[2].x = p[0].x + 10 * map.zoom;
+	p[2].y = (stats[3] / 2) + ((j - i + 1) * 5 - ft_atoi(array[1][i]) * 10) * map.zoom;
 	i++;
 	if (array[0][i] != 0)
 	{
-		p[1].x = (stats[2] / 2) - stats[0] * 10 + (j + i) * 10;
-		p[1].y = (stats[3] / 2) + (j * 5) - (i * 5) - ft_atoi(array[0][i]) * 10;
+		p[1].x = (stats[2] / 2) - stats[0] * 10 + ((j + i) * 10) * map.zoom;
+		p[1].y = (stats[3] / 2) + (((j - i) * 5) - ft_atoi(array[0][i]) * 10) * map.zoom;
 	}
 	else
 		p[1] = p[0];
