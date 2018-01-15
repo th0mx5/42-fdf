@@ -6,23 +6,23 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/15 17:55:23 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/15 18:13:05 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_readanddraw(t_map map, int *stats, int *fd)
+void	ft_readanddraw(t_map map, int *fd)
 {
 	char *s[2];
 
 	*s[1] = get_next_line(fd[1], &s[1]);
 	while ((*s[0] = get_next_line(fd[0], &s[0])) > 0 && \
 			(*s[1] = get_next_line(fd[1], &s[1])) > 0)
-		ft_readpoints(map, stats, s);
+		ft_readpoints(map, s);
 }
 
-void	ft_readpoints(t_map map, int *stats, char **s)
+void	ft_readpoints(t_map map, char **s)
 {
 	int			i;
 	char		**array[2];
@@ -37,7 +37,7 @@ void	ft_readpoints(t_map map, int *stats, char **s)
 	{
 		z.x = i;
 		z.y = j;
-		ft_setpoints(p, stats, z, array);
+		ft_setpoints(map, p, z, array);
 		ft_drawline(map, p[0], p[1]);
 		ft_drawline(map, p[0], p[2]);
 		i++;
@@ -45,13 +45,18 @@ void	ft_readpoints(t_map map, int *stats, char **s)
 	j++;
 }
 
-void	ft_setpoints(t_coord *p, int *stats, t_coord z, char ***array)
+void	ft_setpoints(t_map map, t_coord *p, t_coord z, char ***array)
 {
 	int i;
 	int j;
+	int stats[4];
 
 	i = z.x;
 	j = z.y;
+	stats[0] = map.fsize.y;
+	stats[1] = map.fsize.x;
+	stats[2] = map.wsize.x;
+	stats[3] = map.wsize.y;
 	p[0].x = (stats[2] / 2) - stats[0] * 10 + (j + i) * 10;
 	p[0].y = (stats[3] / 2) + (j - i) * 5 - ft_atoi(array[0][i]) * 10;
 	p[2].x = p[0].x + 10;
@@ -68,32 +73,28 @@ void	ft_setpoints(t_coord *p, int *stats, t_coord z, char ***array)
 		p[2] = p[0];
 }
 
-int		ft_map_init(t_map *map, char *file_name, int *stats)
+int		ft_map_init(t_map *map, char *file_name)
 {
 	char *s;
 	int tmp;
 	int i;
 	char **array;
 	int fd[2];
-	stats[0] = 0;
-	stats[1] = 0;
+	map->fsize.y = 0;
+	map->fsize.x = 0;
 	if (((fd[0] = open(file_name, O_RDONLY)) < 0))
 		return (-1);
 	while ((*s = get_next_line(fd[0], &s)) > 0)
 	{
 		i = 0;
-		stats[0]++;
+		map->fsize.y++;
 		tmp = 0;
 		array = ft_strsplit(s, ' ');
 		while (array[i++])
 			tmp++;
-		if (tmp > stats[1])
-			stats[1] = tmp;
+		if (tmp > map->fsize.x)
+			map->fsize.x = tmp;
 	}
-	stats[2] = stats[1] * 40;
-	stats[3] = stats[0] * 40;
-	map->fsize.x = stats[1];
-	map->fsize.y = stats[0];
 	map->wsize.x = map->fsize.x * 40;
 	map->wsize.y = map->fsize.y * 40;
 	if (map->wsize.x < 50)
