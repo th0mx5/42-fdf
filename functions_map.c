@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/15 19:24:54 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/16 15:14:18 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		ft_map_init(t_map *map, char *file_name)
 	map->zoom = 1.00;
 	map->fsize.y = 0;
 	map->fsize.x = 0;
+	map->maxvalue = 0;
 	ft_map_counts(map, file_name);
 	map->wsize.x = map->fsize.x * 40;
 	map->wsize.y = map->fsize.y * 40;
@@ -44,8 +45,13 @@ int		ft_map_counts(t_map *map, char *file_name)
 		map->fsize.y++;
 		tmp = 0;
 		array = ft_strsplit(s, ' ');
-		while (array[i++])
+		while (array[i])
+		{
+			if (ft_atoi(array[i]) > map->maxvalue)
+				map->maxvalue = ft_atoi(array[i]);
 			tmp++;
+			i++;
+		}
 		if (tmp > map->fsize.x)
 			map->fsize.x = tmp;
 	}

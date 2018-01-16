@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/15 19:15:32 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/16 16:22:00 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,15 @@ void	ft_setpoints(t_map map, t_coord *p, t_coord z, char ***array)
 	stats[1] = map.fsize.x;
 	stats[2] = map.wsize.x;
 	stats[3] = map.wsize.y;
-	p[0].x = (stats[2] / 2) - stats[0] * 10 + ((j + i) * 10) * map.zoom;
-	p[0].y = (stats[3] / 2) + ((j - i) * 5 - ft_atoi(array[0][i]) * 10) * map.zoom;
-	p[2].x = p[0].x + 10 * map.zoom;
-	p[2].y = (stats[3] / 2) + ((j - i + 1) * 5 - ft_atoi(array[1][i]) * 10) * map.zoom;
+	p[0].x = (stats[2] / 2) - (stats[0] * 10 * map.zoom) + ((j + i) * 7) * map.zoom;
+	p[0].y = (stats[3] / 2) + ((j - i) * 4 - ft_atoi(array[0][i]) * 8) * map.zoom;
+	p[2].x = (stats[2] / 2) - (stats[0] * 10 * map.zoom) + ((j + i + 1) * 7) * map.zoom;
+	p[2].y = (stats[3] / 2) + ((j - i + 1) * 4 - ft_atoi(array[1][i]) * 8) * map.zoom;
 	i++;
 	if (array[0][i] != 0)
 	{
-		p[1].x = (stats[2] / 2) - stats[0] * 10 + ((j + i) * 10) * map.zoom;
-		p[1].y = (stats[3] / 2) + (((j - i) * 5) - ft_atoi(array[0][i]) * 10) * map.zoom;
+		p[1].x = (stats[2] / 2) - (stats[0] * 10 * map.zoom) + ((j + i) * 7) * map.zoom;
+		p[1].y = (stats[3] / 2) + (((j - i) * 4) - ft_atoi(array[0][i]) * 8) * map.zoom;
 	}
 	else
 		p[1] = p[0];
@@ -98,12 +98,14 @@ void	ft_setpoints(t_map map, t_coord *p, t_coord z, char ***array)
 void	ft_drawline(t_map map, t_coord a, t_coord b)
 {
 	int k;
+	int max;
 
 	k = 0;
-	while (k < 100)
+	max = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2));
+	while (k < max)
 	{
-		mlx_pixel_put(map.mlx, map.win, a.x + (k * (b.x - a.x)) / 100, a.y + \
-				(k * (b.y - a.y)) / 100, 0x00FFFFFF);
+		mlx_pixel_put(map.mlx, map.win, a.x + (k * (b.x - a.x)) / max, a.y + \
+				(k * (b.y - a.y)) / max, 0x00FFFFFF);
 		k++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:51:59 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/15 19:14:59 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/16 15:34:22 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct	s_coord
 {
 	int			x;
 	int			y;
+	int			z;
 }				t_coord;
 
 typedef struct	s_map
