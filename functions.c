@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/16 16:22:00 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/22 20:40:46 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,97 +15,88 @@
 int		ft_keyhooked(int keycode, t_map *map)
 {
 	if (keycode == 53)
+	{
+		//free((void*)&map);
 		exit(0);
-	if (keycode == 126)
+	}
+	if (keycode == 69)
 		map->zoom = map->zoom + 0.1;
-	if (keycode == 125)
+	if (keycode == 78)
 		map->zoom = map->zoom - 0.1;
+	if (keycode == 123)
+		map->xshift = map->xshift + 10;
+	if (keycode == 124)
+		map->xshift = map->xshift - 10;
+	if (keycode == 125)
+		map->yshift = map->yshift - 10;
+	if (keycode == 126)
+		map->yshift = map->yshift + 10;
 	ft_win_clear(*map);
-	ft_readanddraw(*map);
-	//printf("%f\n", map->zoom);
+	ft_map_calc3Dvalues(map);
+	ft_win_draw(*map);
+	//printf("keycode : %d\n", keycode);
 	return (0);
 }
 
-void	ft_readanddraw(t_map map)
+void	ft_win_draw(t_map map)
 {
-	char	*s[2];
-	int		fd[2];
-	int		j;
-
-	j = 0;
-	if (((fd[0] = open(map.fname, O_RDONLY)) < 0))
-		exit(1);
-	if (((fd[1] = open(map.fname, O_RDONLY)) < 0))
-		exit(1);
-	*s[1] = get_next_line(fd[1], &s[1]);
-	while ((*s[0] = get_next_line(fd[0], &s[0])) > 0 && \
-			(*s[1] = get_next_line(fd[1], &s[1])) > 0)
-	{
-		ft_readpoints(map, s, j);
-		j++;
-	}
-}
-
-void	ft_readpoints(t_map map, char **s, int j)
-{
-	int			i;
-	char		**array[2];
+	int		i;
+	int			j;
 	t_coord		p[3];
-	t_coord		z;
 
 	i = 0;
-	array[0] = ft_strsplit(s[0], ' ');
-	array[1] = ft_strsplit(s[1], ' ');
-	while (array[0][i] != 0)
+	while (i < map.fsize.y)
 	{
-		z.x = i;
-		z.y = j;
-		ft_setpoints(map, p, z, array);
-		ft_drawline(map, p[0], p[1]);
-		ft_drawline(map, p[0], p[2]);
+		j = 0;
+		while (j < map.fsize.x)
+		{
+			p[0] = map.values3d[i][j];
+			p[1] = p[0];
+			p[2] = p[0];
+			if (j + 1 < map.fsize.x)
+				p[1] = map.values3d[i][j + 1];
+			if (i + 1 < map.fsize.y)
+				p[2] = map.values3d[i + 1][j];
+			ft_drawline(map, p[0], p[1]);
+			ft_drawline(map, p[0], p[2]);
+			j++;
+		}
 		i++;
 	}
-}
-
-void	ft_setpoints(t_map map, t_coord *p, t_coord z, char ***array)
-{
-	int i;
-	int j;
-	int stats[4];
-
-	i = z.x;
-	j = z.y;
-	stats[0] = map.fsize.y;
-	stats[1] = map.fsize.x;
-	stats[2] = map.wsize.x;
-	stats[3] = map.wsize.y;
-	p[0].x = (stats[2] / 2) - (stats[0] * 10 * map.zoom) + ((j + i) * 7) * map.zoom;
-	p[0].y = (stats[3] / 2) + ((j - i) * 4 - ft_atoi(array[0][i]) * 8) * map.zoom;
-	p[2].x = (stats[2] / 2) - (stats[0] * 10 * map.zoom) + ((j + i + 1) * 7) * map.zoom;
-	p[2].y = (stats[3] / 2) + ((j - i + 1) * 4 - ft_atoi(array[1][i]) * 8) * map.zoom;
-	i++;
-	if (array[0][i] != 0)
-	{
-		p[1].x = (stats[2] / 2) - (stats[0] * 10 * map.zoom) + ((j + i) * 7) * map.zoom;
-		p[1].y = (stats[3] / 2) + (((j - i) * 4) - ft_atoi(array[0][i]) * 8) * map.zoom;
-	}
-	else
-		p[1] = p[0];
-	if (i - 1 <= 0)
-		p[2] = p[0];
 }
 
 void	ft_drawline(t_map map, t_coord a, t_coord b)
 {
 	int k;
 	int max;
+	int x;
+	int y;
 
 	k = 0;
 	max = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2));
 	while (k < max)
 	{
-		mlx_pixel_put(map.mlx, map.win, a.x + (k * (b.x - a.x)) / max, a.y + \
-				(k * (b.y - a.y)) / max, 0x00FFFFFF);
+		x = a.x + (k * (b.x - a.x)) / max;
+		y = a.y + (k * (b.y - a.y)) / max;
+		mlx_pixel_put(map.mlx, map.win, x, y, 0x00FFFFFF);
 		k++;
+	}
+}
+
+void	ft_win_clear(t_map map)
+{
+	int j;
+	int i;
+
+	i = 0;
+	while (i < map.wsize.y)
+	{
+		j = 0;
+		while (j < map.wsize.x)
+		{
+			mlx_pixel_put(map.mlx, map.win, j, i, 0x000000);
+			j++;
+		}
+		i++;
 	}
 }
