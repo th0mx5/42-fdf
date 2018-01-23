@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/22 20:52:49 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/23 16:18:05 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_map_init(t_map *map, char *file_name)
 		map->wsize.y = 50;
 	ft_map_allocvalues(map);
 	ft_map_writevalues(map);
-	ft_map_calc3Dvalues(map);
+	ft_map_calc3dvalues(map);
 	return (0);
 }
 
@@ -57,6 +57,7 @@ int		ft_map_counts(t_map *map)
 			tmp++;
 			i++;
 		}
+		free(array);
 		if (tmp > map->fsize.x)
 			map->fsize.x = tmp;
 	}
@@ -69,12 +70,10 @@ int		ft_map_allocvalues(t_map *map)
 	int j;
 
 	i = 0;
-	map->values = (int**)malloc(sizeof(int*) * map->fsize.y);
-	map->values3d = (t_coord**)malloc(sizeof(t_coord*) * map->fsize.y);
+	map->values = (t_coord**)malloc(sizeof(t_coord*) * map->fsize.y);
 	while (i < map->fsize.y)
 	{
-		map->values[i] = (int*)malloc(sizeof(int) * map->fsize.x);
-		map->values3d[i] = (t_coord*)malloc(sizeof(t_coord) * map->fsize.x);
+		map->values[i] = (t_coord*)malloc(sizeof(t_coord) * map->fsize.x);
 		i++;
 	}
 	return (0);
@@ -98,15 +97,16 @@ int		ft_map_writevalues(t_map *map)
 		array = ft_strsplit(s, ' ');
 		while (j < map->fsize.x)
 		{
-			map->values[i][j] = ft_atoi(array[j]);
+			map->values[i][j].z = ft_atoi(array[j]);
 			j++;
 		}
+		free(array);
 		i++;
 	}
 	return (0);
 }
 
-int		ft_map_calc3Dvalues(t_map *map)
+int		ft_map_calc3dvalues(t_map *map)
 {
 	int i;
 	int j;
@@ -118,10 +118,12 @@ int		ft_map_calc3Dvalues(t_map *map)
 		j = 0;
 		while (j < map->fsize.x)
 		{
-			map->values3d[i][j].x = (map->wsize.x / 2) - (map->fsize.y * 10 * map->zoom) + ((i + j) * 7) * map->zoom;
-			map->values3d[i][j].x = map->values3d[i][j].x + map->xshift;
-			map->values3d[i][j].y = (map->wsize.y / 2) + (((i - j) * 4 - (map->values[i][j] * 8)) * map->zoom);
-			map->values3d[i][j].y = map->values3d[i][j].y + map->yshift;
+			map->values[i][j].x = (map->wsize.x / 2) - (map->fsize.y * 10 * \
+					map->zoom) + ((i + j) * 7) * map->zoom;
+			map->values[i][j].x = map->values[i][j].x + map->xshift;
+			map->values[i][j].y = (map->wsize.y / 2) + (((i - j) * 4 - \
+						(map->values[i][j].z * 8)) * map->zoom);
+			map->values[i][j].y = map->values[i][j].y + map->yshift;
 			j++;
 		}
 		i++;

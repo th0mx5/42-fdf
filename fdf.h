@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:51:59 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/22 20:18:54 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/23 15:43:19 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ typedef struct	s_map
 	char		*fname;
 	t_coord		wsize;
 	int			maxvalue;
-	int			**values;
-	t_coord		**values3d;
+	t_coord		**values;
 	double		zoom;
 	int			xshift;
 	int			yshift;
@@ -44,7 +43,7 @@ int				ft_map_init(t_map *map, char *file_name);
 int				ft_map_counts(t_map *map);
 int				ft_map_allocvalues(t_map *map);
 int				ft_map_writevalues(t_map *map);
-int				ft_map_calc3Dvalues(t_map *map);
+int				ft_map_calc3dvalues(t_map *map);
 
 void			ft_drawline(t_map map, t_coord a, t_coord b);
 void			ft_win_draw(t_map map);

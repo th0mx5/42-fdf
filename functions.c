@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/22 20:40:46 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/23 16:20:21 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_keyhooked(int keycode, t_map *map)
 {
 	if (keycode == 53)
 	{
-		//free((void*)&map);
+		free(map->values);
 		exit(0);
 	}
 	if (keycode == 69)
@@ -32,15 +32,14 @@ int		ft_keyhooked(int keycode, t_map *map)
 	if (keycode == 126)
 		map->yshift = map->yshift + 10;
 	ft_win_clear(*map);
-	ft_map_calc3Dvalues(map);
+	ft_map_calc3dvalues(map);
 	ft_win_draw(*map);
-	//printf("keycode : %d\n", keycode);
 	return (0);
 }
 
 void	ft_win_draw(t_map map)
 {
-	int		i;
+	int			i;
 	int			j;
 	t_coord		p[3];
 
@@ -50,13 +49,13 @@ void	ft_win_draw(t_map map)
 		j = 0;
 		while (j < map.fsize.x)
 		{
-			p[0] = map.values3d[i][j];
+			p[0] = map.values[i][j];
 			p[1] = p[0];
 			p[2] = p[0];
 			if (j + 1 < map.fsize.x)
-				p[1] = map.values3d[i][j + 1];
+				p[1] = map.values[i][j + 1];
 			if (i + 1 < map.fsize.y)
-				p[2] = map.values3d[i + 1][j];
+				p[2] = map.values[i + 1][j];
 			ft_drawline(map, p[0], p[1]);
 			ft_drawline(map, p[0], p[2]);
 			j++;
@@ -71,6 +70,7 @@ void	ft_drawline(t_map map, t_coord a, t_coord b)
 	int max;
 	int x;
 	int y;
+	int z;
 
 	k = 0;
 	max = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2));
@@ -78,7 +78,11 @@ void	ft_drawline(t_map map, t_coord a, t_coord b)
 	{
 		x = a.x + (k * (b.x - a.x)) / max;
 		y = a.y + (k * (b.y - a.y)) / max;
-		mlx_pixel_put(map.mlx, map.win, x, y, 0x00FFFFFF);
+		z = ((a.z + b.z) / 0.02) / map.maxvalue;
+		if (z < 50)
+			mlx_pixel_put(map.mlx, map.win, x, y, 0x00FFFFFF);
+		else
+			mlx_pixel_put(map.mlx, map.win, x, y, 0x00BD8D46);
 		k++;
 	}
 }
