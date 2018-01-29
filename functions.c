@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/29 19:33:22 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/29 20:07:35 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 int		ft_keyhooked(int keycode, t_map *map)
 {
 	if (keycode == 53)
-	{
-		free(map->values);
 		exit(0);
-	}
 	if (keycode == 69)
 		map->zoom = map->zoom + 0.1;
-	if (keycode == 78)
+	if (keycode == 78 && map->zoom > 0.2)
 		map->zoom = map->zoom - 0.1;
 	if (keycode == 123)
 		map->xshift = map->xshift + 10;
@@ -33,10 +30,8 @@ int		ft_keyhooked(int keycode, t_map *map)
 		map->yshift = map->yshift + 10;
 	mlx_destroy_image(map->mlx, map->img);
 	map->img = mlx_new_image(map->win, map->wsize.x, map->wsize.y);
-	mlx_pixel_put(map->mlx, map->win, 1, 1, 0x00FFFFFF);
 	ft_map_calc3dvalues(map);
 	ft_win_draw(map);
-	//printf("%d\n", keycode);
 	return (0);
 }
 

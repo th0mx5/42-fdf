@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/29 17:13:44 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/29 20:03:06 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,13 @@ int		ft_map_allocvalues(t_map *map)
 
 	i = 0;
 	map->values = (t_coord**)malloc(sizeof(t_coord*) * map->fsize.y);
+	if (map->values == NULL)
+		exit(-1);
 	while (i < map->fsize.y)
 	{
 		map->values[i] = (t_coord*)malloc(sizeof(t_coord) * map->fsize.x);
+		if (map->values[i] == NULL)
+			exit(-1);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 13:58:04 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/29 17:12:07 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/29 19:52:07 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ int		main(int ac, char **av)
 	map.mlx = mlx;
 	map.win = win;
 	ft_win_draw(&map);
+	ft_putstr("--- Controls ---\n");
+	ft_putstr("+ : zoom in\n");
+	ft_putstr("- : zoom out\n");
+	ft_putstr("arrow keys : move\n");
 	mlx_key_hook(win, ft_keyhooked, &map);
 	mlx_loop(mlx);
 	return (0);
