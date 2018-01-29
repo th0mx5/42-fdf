@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/19 13:58:04 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/29 17:12:07 by thbernar         ###   ########.fr       */
+/*   Created: 2018/01/29 15:04:48 by thbernar          #+#    #+#             */
+/*   Updated: 2018/01/29 18:07:37 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		main(int ac, char **av)
+void	ft_free_strsplit(char **array)
 {
-	void	*mlx;
-	void	*win;
-	t_map	map;
+	int i;
 
-	if (ac != 2)
-		return (-1);
-	if (ft_map_init(&map, av[1]) != 0)
-		exit(1);
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, map.wsize.x, map.wsize.y, "FdF");
-	map.mlx = mlx;
-	map.win = win;
-	ft_win_draw(&map);
-	mlx_key_hook(win, ft_keyhooked, &map);
-	mlx_loop(mlx);
-	return (0);
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
+void	ft_img_putpixel(t_map *map, int x, int y, int *color)
+{
+	int i;
+	int j;
+
+	j = 0;
+	i = (x + (y * map->wsize.x)) * 4;
+	if (x > 0 && y > 0 && x < map->wsize.x && y < map->wsize.y)
+	{
+		map->img_data[i] = color[0];
+		map->img_data[i + 1] = color[1];
+		map->img_data[i + 2] = color[2];
+	}
 }

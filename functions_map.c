@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/23 16:18:05 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/29 17:13:44 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int		ft_map_init(t_map *map, char *file_name)
 		map->wsize.x = 50;
 	if (map->wsize.y < 50)
 		map->wsize.y = 50;
+	if (map->wsize.x > 1000)
+		map->wsize.x = 1000;
+	if (map->wsize.y > 1000)
+		map->wsize.y = 1000;
+	map->img = mlx_new_image(map->mlx, map->wsize.x, map->wsize.y);
 	ft_map_allocvalues(map);
 	ft_map_writevalues(map);
 	ft_map_calc3dvalues(map);
@@ -44,12 +49,13 @@ int		ft_map_counts(t_map *map)
 
 	if (((fd[0] = open(map->fname, O_RDONLY)) < 0))
 		return (-1);
-	while ((*s = get_next_line(fd[0], &s)) > 0)
+	while ((get_next_line(fd[0], &s)) > 0)
 	{
 		i = 0;
 		map->fsize.y++;
 		tmp = 0;
 		array = ft_strsplit(s, ' ');
+		free(s);
 		while (array[i])
 		{
 			if (ft_atoi(array[i]) > map->maxvalue)
@@ -57,10 +63,11 @@ int		ft_map_counts(t_map *map)
 			tmp++;
 			i++;
 		}
-		free(array);
+		ft_free_strsplit(array);
 		if (tmp > map->fsize.x)
 			map->fsize.x = tmp;
 	}
+	free(s);
 	return (0);
 }
 
@@ -95,14 +102,16 @@ int		ft_map_writevalues(t_map *map)
 	{
 		j = 0;
 		array = ft_strsplit(s, ' ');
+		free(s);
 		while (j < map->fsize.x)
 		{
 			map->values[i][j].z = ft_atoi(array[j]);
 			j++;
 		}
-		free(array);
+		ft_free_strsplit(array);
 		i++;
 	}
+	free(s);
 	return (0);
 }
 
