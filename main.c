@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 13:58:04 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/29 19:52:07 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:28:17 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		main(int ac, char **av)
 	void	*mlx;
 	void	*win;
 	t_map	map;
+	int		n[3];
 
 	if (ac != 2)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:51:59 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/29 18:02:31 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:59:58 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ typedef struct	s_map
 	void		*mlx;
 	void		*win;
 	void		*img;
+	void		*img_blank;
 	t_coord		fsize;
 	char		*fname;
 	t_coord		wsize;
 	int			maxvalue;
-	t_coord		**values;
+	t_coord		*values;
 	char		*img_data;
 	double		zoom;
 	int			xshift;
@@ -49,11 +50,12 @@ int				ft_map_calc3dvalues(t_map *map);
 
 void			ft_drawline(t_map map, t_coord a, t_coord b);
 void			ft_win_draw(t_map *map);
-void			ft_win_clear(t_map map);
 
 void			ft_free_strsplit(char **array);
-void			ft_img_putpixel(t_map *map, int x, int y, int *color);
+void			ft_img_putpixel(t_map *map, t_coord p, int *color);
 
 int				ft_keyhooked(int keycode, t_map *map);
+
+t_coord			ft_transform(t_map *map, t_coord a);
 
 #endif
