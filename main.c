@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 13:58:04 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/31 22:23:20 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 00:24:02 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int		main(int ac, char **av)
 	map.mlx = mlx;
 	map.win = win;
 	ft_win_draw(&map);
-	ft_putstr("MAP PRINTED : OK !\n");
 	ft_printcontrols();
 	mlx_key_hook(win, ft_keyhooked, &map);
 	mlx_loop(mlx);

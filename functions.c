@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/31 23:28:29 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 00:07:18 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_win_draw(t_map *map)
 	}
 	mlx_put_image_to_window(map->mlx, map->win, map->img, 0, 0);
 	mlx_destroy_image(map->mlx, map->img);
-	//ft_putstr("MAP PRINTED !\n");
+	mlx_do_sync(map->mlx);
 }
 
 void	ft_drawline(t_map map, t_coord a, t_coord b)

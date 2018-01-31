@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 15:04:48 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/31 23:13:40 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 00:23:10 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ t_coord	ft_transform(t_map *map, t_coord a)
 
 void	ft_printcontrols()
 {
-	ft_putstr("--- Controls ---\n");
+	ft_putstr("\n--- Controls ---\n");
 	ft_putstr("+ : zoom in\n");
 	ft_putstr("- : zoom out\n");
-	ft_putstr("arrow keys : move\n");
+	ft_putstr("ARROWS : move\n");
+	ft_putstr("LEFT OPTION : move\n");
+	ft_putstr("LEFT CMD : move\n");
 }
