@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/30 15:52:15 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/01/31 23:06:40 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		ft_map_init(t_map *map, char *file_name)
 	map->maxvalue = 0;
 	map->xshift = 0;
 	map->yshift = 0;
+	map->zshift = 0;
 	ft_map_counts(map);
 	map->wsize.x = map->fsize.x * 40;
 	map->wsize.y = map->fsize.y * 40;
@@ -34,6 +35,7 @@ int		ft_map_init(t_map *map, char *file_name)
 		map->wsize.y = 1000;
 	ft_map_allocvalues(map);
 	ft_map_writevalues(map);
+	ft_putstr("MAP INIT : OK !\n");
 	return (0);
 }
 
