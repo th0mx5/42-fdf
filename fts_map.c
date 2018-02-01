@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 21:01:19 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 21:02:30 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_map_init(t_map *map, char *file_name)
 	map->zshift = 0;
 	ft_map_counts(map);
 	if (map->fsize.z != map->fsize.x * map->fsize.y)
-		ft_error("error : invalid map\n");
+		ft_error("error : invalid files\n");
 	map->wsize.x = map->fsize.x * 40;
 	map->wsize.y = map->fsize.y * 40;
 	if (map->wsize.x < 50)
