@@ -6,23 +6,26 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 01:17:11 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 20:54:08 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		ft_map_init(t_map *map, char *file_name)
+void	ft_map_init(t_map *map, char *file_name)
 {
 	map->fname = ft_strdup(file_name);
 	map->zoom = 1.00;
 	map->fsize.y = 0;
 	map->fsize.x = 0;
+	map->fsize.z = 0;
 	map->maxvalue = 0;
 	map->xshift = 0;
 	map->yshift = 0;
 	map->zshift = 0;
 	ft_map_counts(map);
+	if (map->fsize.z != map->fsize.x * map->fsize.y)
+		ft_error("error : invalid map\n");
 	map->wsize.x = map->fsize.x * 40;
 	map->wsize.y = map->fsize.y * 40;
 	if (map->wsize.x < 50)
@@ -35,19 +38,18 @@ int		ft_map_init(t_map *map, char *file_name)
 		map->wsize.y = 1000;
 	ft_map_allocvalues(map);
 	ft_map_writevalues(map);
-	return (0);
 }
 
-int		ft_map_counts(t_map *map)
+void	ft_map_counts(t_map *map)
 {
 	char	*s;
 	int		i;
 	char	**array;
-	int		fd[2];
+	int		fd;
 
-	if (((fd[0] = open(map->fname, O_RDONLY)) < 0))
+	if (((fd = open(map->fname, O_RDONLY)) < 0))
 		ft_error("usage : ./fdf [file_name]\n");
-	while ((get_next_line(fd[0], &s)) > 0)
+	while ((get_next_line(fd, &s)) > 0)
 	{
 		i = 0;
 		map->fsize.y++;
@@ -60,11 +62,11 @@ int		ft_map_counts(t_map *map)
 				map->maxvalue = ft_atoi(array[i]);
 			map->fsize.x++;
 			i++;
+			map->fsize.z++;
 		}
 		ft_free_strsplit(array);
 	}
 	free(s);
-	return (0);
 }
 
 int		ft_map_allocvalues(t_map *map)
@@ -76,7 +78,7 @@ int		ft_map_allocvalues(t_map *map)
 	return (0);
 }
 
-int		ft_map_writevalues(t_map *map)
+void	ft_map_writevalues(t_map *map)
 {
 	int		j;
 	int		i;
@@ -85,7 +87,6 @@ int		ft_map_writevalues(t_map *map)
 	char	*s;
 
 	i = 0;
-	j = 0;
 	if (((fd = open(map->fname, O_RDONLY)) < 0))
 		ft_error("usage : ./fdf [file_name]\n");
 	while ((get_next_line(fd, &s)) > 0)
@@ -104,5 +105,4 @@ int		ft_map_writevalues(t_map *map)
 		ft_free_strsplit(array);
 	}
 	free(s);
-	return (0);
 }

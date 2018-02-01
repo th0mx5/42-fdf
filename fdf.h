@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:51:59 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 01:09:48 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 20:54:20 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ typedef struct	s_map
 	int			zshift;
 }				t_map;
 
-int				ft_map_init(t_map *map, char *file_name);
-int				ft_map_counts(t_map *map);
+void			ft_map_init(t_map *map, char *file_name);
+void			ft_map_counts(t_map *map);
 int				ft_map_allocvalues(t_map *map);
-int				ft_map_writevalues(t_map *map);
+void			ft_map_writevalues(t_map *map);
 int				ft_map_calc3dvalues(t_map *map);
 
 void			ft_drawline(t_map map, t_coord a, t_coord b);

@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 01:10:13 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 20:05:35 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	ft_win_draw(t_map *map)
 	i = 0;
 	map->img = mlx_new_image(map->win, map->wsize.x, map->wsize.y);
 	map->img_data = (int*)mlx_get_data_addr(map->img, &n[0], &n[1], &n[2]);
-	while (i - 1 < map->fsize.z)
+	while (i < map->fsize.z)
 	{
 		if ((i + 1) % map->fsize.x != 0)
 			ft_drawline(*map, map->values[i], map->values[i + 1]);
-		if (i + map->fsize.x <= map->fsize.z)
+		if (i + map->fsize.x < map->fsize.z)
 			ft_drawline(*map, map->values[i], map->values[i + map->fsize.x]);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 13:58:04 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 01:07:17 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 20:55:18 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ int		main(int ac, char **av)
 	void	*win;
 	t_map	map;
 
-	if (ac != 2 || ft_map_init(&map, av[1]) != 0)
+	if (ac != 2)
 		ft_error("usage : ./fdf [file_name]\n");
+	ft_map_init(&map, av[1]);
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, map.wsize.x, map.wsize.y, "FdF");
 	map.mlx = mlx;
