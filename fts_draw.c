@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:54:53 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 00:07:18 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 01:10:13 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	ft_win_draw(t_map *map)
 
 void	ft_drawline(t_map map, t_coord a, t_coord b)
 {
-	int k;
-	int max;
-	t_coord p;
-	int color;
+	int		k;
+	int		max;
+	t_coord	p;
+	int		color;
 
 	a = ft_transform(&map, a);
 	b = ft_transform(&map, b);

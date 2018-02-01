@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 01:04:34 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 01:17:11 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		ft_map_init(t_map *map, char *file_name)
 int		ft_map_counts(t_map *map)
 {
 	char	*s;
-	int		tmp;
 	int		i;
 	char	**array;
 	int		fd[2];
@@ -52,19 +51,17 @@ int		ft_map_counts(t_map *map)
 	{
 		i = 0;
 		map->fsize.y++;
-		tmp = 0;
+		map->fsize.x = 0;
 		array = ft_strsplit(s, ' ');
 		free(s);
 		while (array[i])
 		{
 			if (ft_atoi(array[i]) > map->maxvalue)
 				map->maxvalue = ft_atoi(array[i]);
-			tmp++;
+			map->fsize.x++;
 			i++;
 		}
 		ft_free_strsplit(array);
-		if (tmp > map->fsize.x)
-			map->fsize.x = tmp;
 	}
 	free(s);
 	return (0);
@@ -90,7 +87,7 @@ int		ft_map_writevalues(t_map *map)
 	i = 0;
 	j = 0;
 	if (((fd = open(map->fname, O_RDONLY)) < 0))
-		return (-1);
+		ft_error("usage : ./fdf [file_name]\n");
 	while ((get_next_line(fd, &s)) > 0)
 	{
 		j = 0;
