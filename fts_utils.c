@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 15:04:48 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 00:23:10 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 01:05:10 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,10 @@ void	ft_printcontrols()
 	ft_putstr("ARROWS : move\n");
 	ft_putstr("LEFT OPTION : move\n");
 	ft_putstr("LEFT CMD : move\n");
+}
+
+void	ft_error(char *s)
+{
+	ft_putstr(s);
+	exit(-1);
 }

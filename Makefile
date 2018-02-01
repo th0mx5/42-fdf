@@ -6,16 +6,16 @@
 #    By: thbernar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/01 00:25:16 by thbernar          #+#    #+#              #
-#    Updated: 2018/02/01 00:41:38 by thbernar         ###   ########.fr        #
+#    Updated: 2018/02/01 00:59:17 by thbernar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf 
 
 SRC = main.c \
-	  functions.c \
-	  functions_map.c \
-	  utils.c \
+	  fts_draw.c \
+	  fts_map.c \
+	  fts_utils.c \
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 00:24:15 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 01:04:34 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ft_map_counts(t_map *map)
 	int		fd[2];
 
 	if (((fd[0] = open(map->fname, O_RDONLY)) < 0))
-		return (-1);
+		ft_error("usage : ./fdf [file_name]\n");
 	while ((get_next_line(fd[0], &s)) > 0)
 	{
 		i = 0;

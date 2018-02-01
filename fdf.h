@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:51:59 by thbernar          #+#    #+#             */
-/*   Updated: 2018/01/31 23:44:25 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/01 01:05:28 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ int				ft_keyhooked(int keycode, t_map *map);
 
 t_coord			ft_transform(t_map *map, t_coord a);
 void			ft_printcontrols();
+void			ft_error(char *s);
 
 #endif
