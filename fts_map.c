@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/01 21:02:30 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/12 16:43:48 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ void	ft_map_counts(t_map *map)
 	int		i;
 	char	**array;
 	int		fd;
+	int		ret;
 
 	if (((fd = open(map->fname, O_RDONLY)) < 0))
 		ft_error("error : invalid file\n");
-	while ((get_next_line(fd, &s)) > 0)
+	while ((ret = get_next_line(fd, &s)) > 0)
 	{
 		i = 0;
 		map->fsize.y++;
@@ -66,7 +67,8 @@ void	ft_map_counts(t_map *map)
 		}
 		ft_free_strsplit(array);
 	}
-	free(s);
+	if (ret != -1)
+		free(s);
 }
 
 int		ft_map_allocvalues(t_map *map)

@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 17:50:51 by thbernar          #+#    #+#             */
-/*   Updated: 2017/12/21 13:03:55 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/02/12 16:36:44 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ char				*ft_strcapitalize(char *str);
 char				*ft_strtolower(char *str);
 int					ft_isprime(int nb);
 
-int			get_next_line(const int fd, char **line);
+int					get_next_line(const int fd, char **line);
 
 #endif
