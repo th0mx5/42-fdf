@@ -6,7 +6,7 @@
 /*   By: thbernar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:16:39 by thbernar          #+#    #+#             */
-/*   Updated: 2018/02/12 16:43:48 by thbernar         ###   ########.fr       */
+/*   Updated: 2018/03/08 14:07:10 by thbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,29 @@ void	ft_map_init(t_map *map, char *file_name)
 void	ft_map_counts(t_map *map)
 {
 	char	*s;
-	int		i;
+	int		i[3];
 	char	**array;
-	int		fd;
-	int		ret;
 
-	if (((fd = open(map->fname, O_RDONLY)) < 0))
+	if (((i[1] = open(map->fname, O_RDONLY)) < 0))
 		ft_error("error : invalid file\n");
-	while ((ret = get_next_line(fd, &s)) > 0)
+	while ((i[2] = get_next_line(i[1], &s)) > 0)
 	{
-		i = 0;
+		i[0] = 0;
 		map->fsize.y++;
 		map->fsize.x = 0;
 		array = ft_strsplit(s, ' ');
 		free(s);
-		while (array[i])
+		while (array[i[0]])
 		{
-			if (ft_atoi(array[i]) > map->maxvalue)
-				map->maxvalue = ft_atoi(array[i]);
+			if (ft_atoi(array[i[0]]) > map->maxvalue)
+				map->maxvalue = ft_atoi(array[i[0]]);
 			map->fsize.x++;
-			i++;
+			i[0]++;
 			map->fsize.z++;
 		}
 		ft_free_strsplit(array);
 	}
-	if (ret != -1)
+	if (i[2] != -1)
 		free(s);
 }
 
